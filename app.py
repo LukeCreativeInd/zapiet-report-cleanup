@@ -30,10 +30,10 @@ product_order = [
     "Bean Nachos with Rice",
     "Lamb Souvlaki",
     "Chicken Fajita Bowl",
-    "Family Mac and 3 Cheese Pasta Bake",
-    "Baked Family Lasagna",
     "Steak On Its Own",
-    "Chicken On Its Own"
+    "Chicken On Its Own",
+    "Family Mac and 3 Cheese Pasta Bake",
+    "Baked Family Lasagna"
 ]
 
 uploaded_file = st.file_uploader("Upload Zapiet Production Report CSV", type="csv")
