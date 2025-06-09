@@ -3,12 +3,15 @@ import pandas as pd
 import io
 
 from clean_eats import run_clean_eats_flow
-# from made_active import run_made_active_flow (we'll build this next)
+from made_active import run_made_active_flow
 
+# --- CONFIG ---
 st.set_page_config(page_title="Product Quantity Summary", layout="centered")
 
+# --- CLIENT SELECTOR ---
 selected_client = st.radio("Select Client", ["Clean Eats", "Made Active"], horizontal=True)
 
+# --- PRODUCT ORDER (shared across both clients) ---
 product_order = [
     "Spaghetti Bolognese",
     "Beef Chow Mein",
@@ -38,6 +41,7 @@ product_order = [
     "Chicken On Its Own"
 ]
 
+# --- FILE UPLOAD ---
 uploaded_file = st.file_uploader("Upload Zapiet Production Report CSV", type="csv")
 
 if uploaded_file:
@@ -53,7 +57,7 @@ if uploaded_file:
             if selected_client == "Clean Eats":
                 run_clean_eats_flow(df, product_order)
             elif selected_client == "Made Active":
-                st.info("Made Active logic will be added next.")
+                run_made_active_flow(df, product_order)
 
     except Exception as e:
         st.error(f"Error reading file: {e}")
