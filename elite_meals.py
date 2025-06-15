@@ -5,9 +5,38 @@ import io
 import streamlit as st
 
 def run_elite_meals_flow(df, mapping_df):
+    # Hardcoded product order from app.py
+    meal_order = [
+        "Spaghetti Bolognese",
+        "Beef Chow Mein",
+        "Shepherd's Pie",
+        "Beef Burrito Bowl",
+        "Beef Meatballs",
+        "Lebanese Beef Stew",
+        "Mongolian Beef",
+        "Chicken with Vegetables",
+        "Chicken with Sweet Potato and Beans",
+        "Naked Chicken Parma",
+        "Chicken Pesto Pasta",
+        "Chicken and Broccoli Pasta",
+        "Butter Chicken",
+        "Thai Green Chicken Curry",
+        "Moroccan Chicken",
+        "Steak with Mushroom Sauce",
+        "Creamy Chicken & Mushroom Gnocchi",
+        "Roasted Lemon Chicken & Potatoes",
+        "Beef Lasagna",
+        "Bean Nachos with Rice",
+        "Lamb Souvlaki",
+        "Chicken Fajita Bowl",
+        "Steak On Its Own",
+        "Chicken On Its Own",
+        "Family Mac and 3 Cheese Pasta Bake",
+        "Baked Family Lasagna"
+    ]
+
     # Create mapping
     mapping = dict(zip(mapping_df["Report Mapping Name"], mapping_df["Elite Meals Meals"]))
-    meal_order = mapping_df["Elite Meals Meals"].tolist()
 
     # Normalize and map
     df.columns = df.columns.str.strip().str.lower()
@@ -18,13 +47,9 @@ def run_elite_meals_flow(df, mapping_df):
 
     # Group
     grouped = df.groupby("Standardized Meal", as_index=False)["quantity"].sum()
-    known_set = set(meal_order)
-    uploaded_set = set(grouped["Standardized Meal"])
-    extras = list(uploaded_set - known_set)
 
-    final_order = meal_order + sorted(extras)
-
-    full_df = pd.DataFrame({"Standardized Meal": final_order})
+    # Ensure full meal order appears with 0s if missing
+    full_df = pd.DataFrame({"Standardized Meal": meal_order})
     merged = pd.merge(full_df, grouped, on="Standardized Meal", how="left").fillna(0)
     merged["quantity"] = merged["quantity"].astype(int)
 
