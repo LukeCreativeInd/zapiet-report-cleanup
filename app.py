@@ -65,8 +65,7 @@ if generate and uploaded_file:
             elif selected_client == "Made Active":
                 run_made_active_flow(df, product_order)
             elif selected_client == "Elite Meals":
-                mapping_df = pd.read_excel("Elite Meals Mapping.xlsx")
-                run_elite_meals_flow(df, mapping_df)
+                run_elite_meals_flow(df)
 
     except Exception as e:
         st.error(f"Error processing file: {e}")
