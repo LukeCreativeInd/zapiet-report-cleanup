@@ -4,7 +4,7 @@ import pandas as pd
 import io
 import streamlit as st
 
-def run_elite_meals_flow(df, mapping_df):
+def run_elite_meals_flow(df):
     # Hardcoded product order from app.py
     meal_order = [
         "Spaghetti Bolognese",
@@ -29,14 +29,41 @@ def run_elite_meals_flow(df, mapping_df):
         "Bean Nachos with Rice",
         "Lamb Souvlaki",
         "Chicken Fajita Bowl",
-        "Steak On Its Own",
-        "Chicken On Its Own",
         "Family Mac and 3 Cheese Pasta Bake",
-        "Baked Family Lasagna"
+        "Baked Family Lasagna",
+        "Steak On Its Own",
+        "Chicken On Its Own"
     ]
 
-    # Create mapping
-    mapping = dict(zip(mapping_df["Report Mapping Name"], mapping_df["Elite Meals Meals"]))
+    # Hardcoded mapping
+    mapping = {
+        "Beef Burrito Bowl": "Beef Burrito Bowl",
+        "Beef Chow Mein With Rice": "Beef Chow Mein",
+        "Butter Chicken With Basmati Rice": "Butter Chicken",
+        "Chicken Pesto Pasta": "Chicken Pesto Pasta",
+        "Chicken with Vegetables": "Chicken with Vegetables",
+        "Chicken with Sweet Potato and Beans": "Chicken with Sweet Potato and Beans",
+        "Naked Chicken Parma": "Naked Chicken Parma",
+        "Chicken Fajita Bowl": "Chicken Fajita Bowl",
+        "Creamy Chicken & Mushroom Gnocchi": "Creamy Chicken & Mushroom Gnocchi",
+        "Roasted Lemon Chicken & Potatoes": "Roasted Lemon Chicken & Potatoes",
+        "Soulfood Lasagna": "Beef Lasagna",
+        "Bean Nachos with Rice": "Bean Nachos with Rice",
+        "Lamb Souvlaki Plate": "Lamb Souvlaki",
+        "Steak & Mash with Mushroom Sauce": "Steak with Mushroom Sauce",
+        "Spaghetti Bolognese": "Spaghetti Bolognese",
+        "Moroccan Chicken with Rice": "Moroccan Chicken",
+        "Thai Green Chicken Curry with Rice": "Thai Green Chicken Curry",
+        "Shepherd's Pie": "Shepherd's Pie",
+        "Chicken On Its Own": "Chicken On Its Own",
+        "Steak On Its Own": "Steak On Its Own",
+        "Family Mac and 3 Cheese Pasta Bake": "Family Mac and 3 Cheese Pasta Bake",
+        "Baked Family Lasagna": "Baked Family Lasagna",
+        "Chicken and Broccoli Pasta": "Chicken and Broccoli Pasta",
+        "Lebanese Beef Stew": "Lebanese Beef Stew",
+        "Mongolian Beef Stir Fry": "Mongolian Beef",
+        "Beef Meatballs in Napolitana Sauce": "Beef Meatballs"
+    }
 
     # Normalize and map
     df.columns = df.columns.str.strip().str.lower()
