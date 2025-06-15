@@ -1,74 +1,72 @@
 import streamlit as st
 import pandas as pd
+import io
 
-st.title("Meal Production Report Summary")
+from clean_eats import run_clean_eats_flow
+from made_active import run_made_active_flow
+from elite_meals import run_elite_meals_flow
 
-# Group selection
-group = st.selectbox("Select Business Group", ["Clean Eats Australia", "Made Active", "Elite Meals"])
+# --- CONFIG ---
+st.set_page_config(page_title="Product Quantity Summary", layout="centered")
 
-# File uploader
-uploaded_file = st.file_uploader("Upload Zapiet Report (CSV or Excel)", type=["csv", "xlsx"])
+# --- CLIENT SELECTOR ---
+selected_client = st.radio("Select Client", ["Clean Eats", "Made Active", "Elite Meals"], horizontal=True)
 
+# --- PRODUCT ORDER (shared across clients that use ordering) ---
+product_order = [
+    "Spaghetti Bolognese",
+    "Beef Chow Mein",
+    "Shepherd's Pie",
+    "Beef Burrito Bowl",
+    "Beef Meatballs",
+    "Lebanese Beef Stew",
+    "Mongolian Beef",
+    "Chicken with Vegetables",
+    "Chicken with Sweet Potato and Beans",
+    "Naked Chicken Parma",
+    "Chicken Pesto Pasta",
+    "Chicken and Broccoli Pasta",
+    "Butter Chicken",
+    "Thai Green Chicken Curry",
+    "Moroccan Chicken",
+    "Steak with Mushroom Sauce",
+    "Creamy Chicken & Mushroom Gnocchi",
+    "Roasted Lemon Chicken & Potatoes",
+    "Beef Lasagna",
+    "Bean Nachos with Rice",
+    "Lamb Souvlaki",
+    "Chicken Fajita Bowl",
+    "Steak On Its Own",
+    "Chicken On Its Own",
+    "Family Mac and 3 Cheese Pasta Bake",
+    "Baked Family Lasagna"
+]
+
+# --- FILE UPLOAD ---
+uploaded_file = st.file_uploader("Upload Zapiet Production Report CSV or Excel", type=["csv", "xlsx"])
 generate = st.button("Generate Report")
 
 if generate and uploaded_file:
-    # Read uploaded file
-    if uploaded_file.name.endswith(".csv"):
-        df = pd.read_csv(uploaded_file)
-    else:
-        df = pd.read_excel(uploaded_file)
+    try:
+        if uploaded_file.name.endswith(".csv"):
+            df = pd.read_csv(uploaded_file)
+        else:
+            df = pd.read_excel(uploaded_file)
 
-    # Normalize column names
-    df.columns = df.columns.str.strip().str.lower()
-    if "product name" in df.columns:
-        product_col = "product name"
-    elif "Product name" in df.columns:
-        product_col = "Product name"
-    else:
-        st.error("Cannot find 'Product name' column.")
-        st.stop()
+        st.success(f"File uploaded. Running script for **{selected_client}**...")
+        st.subheader("Raw Data Preview")
+        st.dataframe(df.head(), use_container_width=True)
 
-    # Standardize the column name
-    df.rename(columns={product_col: "Product"}, inplace=True)
+        if "Product name" not in df.columns or "Quantity" not in df.columns:
+            st.error("File must contain 'Product name' and 'Quantity' columns.")
+        else:
+            if selected_client == "Clean Eats":
+                run_clean_eats_flow(df, product_order)
+            elif selected_client == "Made Active":
+                run_made_active_flow(df, product_order)
+            elif selected_client == "Elite Meals":
+                mapping_df = pd.read_excel("Elite Meals Mapping.xlsx")
+                run_elite_meals_flow(df, mapping_df)
 
-    # Load mapping based on group
-    if group == "Clean Eats Australia":
-        mapping = {
-            "Butter Chicken with Basmati Rice": "Butter Chicken",
-            "Chicken with Broccoli & Beans": "Chicken with Vegetables",
-            "Baked Chicken Breast": "Steak On Its Own",
-            "Porterhouse Steak": "Chicken On Its Own"
-        }
-    elif group == "Made Active":
-        mapping = {
-            "Butter Chicken with Basmati Rice": "Butter Chicken",
-            "Chicken with Broccoli & Beans": "Chicken with Vegetables",
-            "Baked Chicken Breast": "Steak On Its Own",
-            "Porterhouse Steak": "Chicken On Its Own"
-        }
-    elif group == "Elite Meals":
-        elite_mapping = pd.read_excel("Elite Meals Mapping.xlsx")
-        mapping = dict(zip(elite_mapping["Report Mapping Name"], elite_mapping["Elite Meals Meals"]))
-    else:
-        mapping = {}
-
-    # Map and clean data
-    df["Standardized Meal"] = df["Product"].replace(mapping)
-    df["Standardized Meal"] = df["Standardized Meal"].fillna(df["Product"])  # Keep original if no match
-
-    # Group and sum
-    if "quantity" not in df.columns:
-        st.error("Missing 'Quantity' column in uploaded file.")
-        st.stop()
-
-    summary = df.groupby("Standardized Meal")["quantity"].sum().reset_index()
-    summary.columns = ["Meal", "Total Quantity"]
-    summary = summary.sort_values(by="Total Quantity", ascending=False)
-
-    # Display
-    st.subheader("Meal Summary Report")
-    st.dataframe(summary, use_container_width=True)
-
-    # Download
-    csv = summary.to_csv(index=False).encode('utf-8')
-    st.download_button("Download CSV", csv, "meal_summary.csv", "text/csv")
+    except Exception as e:
+        st.error(f"Error processing file: {e}")
