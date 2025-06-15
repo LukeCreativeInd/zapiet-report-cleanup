@@ -35,7 +35,7 @@ def run_elite_meals_flow(df):
         "Baked Family Lasagna"
     ]
 
-    # Hardcoded mapping
+    # Full updated mapping
     mapping = {
         "Beef Burrito Bowl": "Beef Burrito Bowl",
         "Beef Chow Mein With Rice": "Beef Chow Mein",
@@ -51,8 +51,10 @@ def run_elite_meals_flow(df):
         "Bean Nachos with Rice": "Bean Nachos with Rice",
         "Lamb Souvlaki Plate": "Lamb Souvlaki",
         "Steak & Mash with Mushroom Sauce": "Steak with Mushroom Sauce",
+        "Steak with Mushroom Sauce & Mash Potato": "Steak with Mushroom Sauce",
         "Spaghetti Bolognese": "Spaghetti Bolognese",
         "Moroccan Chicken with Rice": "Moroccan Chicken",
+        "Moroccan Chicken": "Moroccan Chicken",
         "Thai Green Chicken Curry with Rice": "Thai Green Chicken Curry",
         "Shepherd's Pie": "Shepherd's Pie",
         "Chicken On Its Own": "Chicken On Its Own",
@@ -60,9 +62,13 @@ def run_elite_meals_flow(df):
         "Family Mac and 3 Cheese Pasta Bake": "Family Mac and 3 Cheese Pasta Bake",
         "Baked Family Lasagna": "Baked Family Lasagna",
         "Chicken and Broccoli Pasta": "Chicken and Broccoli Pasta",
+        "Creamy Chicken and Broccoli Pasta": "Chicken and Broccoli Pasta",
         "Lebanese Beef Stew": "Lebanese Beef Stew",
         "Mongolian Beef Stir Fry": "Mongolian Beef",
-        "Beef Meatballs in Napolitana Sauce": "Beef Meatballs"
+        "Beef Meatballs in Napolitana Sauce": "Beef Meatballs",
+        "Napoli Meatballs & Potato Mash": "Beef Meatballs",
+        "Italian Chicken With Sweet Potato & Beans": "Chicken with Sweet Potato and Beans",
+        "Roast Potatoes With Lemon Chicken": "Roasted Lemon Chicken & Potatoes"
     }
 
     # Normalize and map
