@@ -48,8 +48,8 @@ bundle_map = {
 name_map = {
     "Chicken with Broccoli & Beans": "Chicken with Vegetables",
     "Butter Chicken with Basmati Rice": "Butter Chicken",
-    "Baked Chicken Breast": "Steak On Its Own",
-    "Porterhouse Steak": "Chicken On Its Own"
+    "Baked Chicken Breast": "Chicken On Its Own",
+    "Porterhouse Steak": "Steak On Its Own"
 }
 
 def run_made_active_flow(df, product_order):
