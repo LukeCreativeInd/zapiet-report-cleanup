@@ -29,10 +29,10 @@ def run_elite_meals_flow(df):
         "Bean Nachos with Rice",
         "Lamb Souvlaki",
         "Chicken Fajita Bowl",
-        "Family Mac and 3 Cheese Pasta Bake",
-        "Baked Family Lasagna",
         "Steak On Its Own",
-        "Chicken On Its Own"
+        "Chicken On Its Own",
+        "Family Mac and 3 Cheese Pasta Bake",
+        "Baked Family Lasagna"
     ]
 
     # Hardcoded mapping
