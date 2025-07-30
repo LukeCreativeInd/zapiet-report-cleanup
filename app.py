@@ -43,29 +43,54 @@ product_order = [
 ]
 
 # --- FILE UPLOAD ---
-uploaded_file = st.file_uploader("Upload Zapiet Production Report CSV or Excel", type=["csv", "xlsx"])
+if selected_client == "Clean Eats":
+    file1 = st.file_uploader("Upload Clean Eats Report 1", type=["csv", "xlsx"], key="clean1")
+    file2 = st.file_uploader("Upload Clean Eats Report 2", type=["csv", "xlsx"], key="clean2")
+else:
+    uploaded_file = st.file_uploader("Upload Zapiet Production Report CSV or Excel", type=["csv", "xlsx"])
+
 generate = st.button("Generate Report")
 
-if generate and uploaded_file:
+if generate:
     try:
-        if uploaded_file.name.endswith(".csv"):
-            df = pd.read_csv(uploaded_file)
-        else:
-            df = pd.read_excel(uploaded_file)
+        if selected_client == "Clean Eats":
+            if not file1 or not file2:
+                st.error("Please upload both Clean Eats reports.")
+            else:
+                def read_file(file):
+                    if file.name.endswith(".csv"):
+                        return pd.read_csv(file)
+                    return pd.read_excel(file)
 
-        st.success(f"File uploaded. Running script for **{selected_client}**...")
-        st.subheader("Raw Data Preview")
-        st.dataframe(df.head(), use_container_width=True)
+                df1 = read_file(file1)
+                df2 = read_file(file2)
+                combined_df = pd.concat([df1, df2], ignore_index=True)
 
-        if "Product name" not in df.columns or "Quantity" not in df.columns:
-            st.error("File must contain 'Product name' and 'Quantity' columns.")
+                st.success("Both Clean Eats reports uploaded. Generating summary...")
+                st.subheader("Raw Combined Data Preview")
+                st.dataframe(combined_df.head(), use_container_width=True)
+                run_clean_eats_flow(combined_df, product_order)
+
+        elif uploaded_file:
+            if uploaded_file.name.endswith(".csv"):
+                df = pd.read_csv(uploaded_file)
+            else:
+                df = pd.read_excel(uploaded_file)
+
+            st.success(f"File uploaded. Running script for **{selected_client}**...")
+            st.subheader("Raw Data Preview")
+            st.dataframe(df.head(), use_container_width=True)
+
+            if "Product name" not in df.columns or "Quantity" not in df.columns:
+                st.error("File must contain 'Product name' and 'Quantity' columns.")
+            else:
+                if selected_client == "Made Active":
+                    run_made_active_flow(df, product_order)
+                elif selected_client == "Elite Meals":
+                    run_elite_meals_flow(df)
+
         else:
-            if selected_client == "Clean Eats":
-                run_clean_eats_flow(df, product_order)
-            elif selected_client == "Made Active":
-                run_made_active_flow(df, product_order)
-            elif selected_client == "Elite Meals":
-                run_elite_meals_flow(df)
+            st.error("Please upload a file to continue.")
 
     except Exception as e:
         st.error(f"Error processing file: {e}")
