@@ -41,7 +41,37 @@ bundle_map = {
         "Butter Chicken": 2,
         "Spaghetti Bolognese": 1,
         "Beef Burrito Bowl": 1,
-    }
+    },
+    "Made to Try": {
+        "Mongolian Beef": 1,
+        "Thai Green Chicken Curry": 1,
+        "Naked Chicken Parma": 1,
+        "Butter Chicken": 1,
+        "Spaghetti Bolognese": 1,
+        "Beef Burrito Bowl": 1,
+        "Chicken Pesto Pasta": 1,
+        "Beef Chow Mein": 1,
+        "Beef Lasagna": 1,
+        "Beef Meatballs": 1,
+    },
+    "Made for Weight Loss": {
+        "Chicken with Vegetables": 2,
+        "Naked Chicken Parma": 2,
+        "Spaghetti Bolognese": 2,
+        "Roasted Lemon Chicken & Potatoes": 2,
+        "Steak with Mushroom Sauce": 2,
+        "Lamb Souvlaki": 2,
+    },
+    "Made for More": {
+        "Chicken Fajita Bowl": 3,
+        "Mongolian Beef": 3,
+        "Thai Green Chicken Curry": 3,
+        "Butter Chicken": 3,
+        "Beef Burrito Bowl": 3,
+        "Beef Chow Mein": 3,
+        "Chicken Pesto Pasta": 3,
+        "Beef Lasagna": 3,
+    },
 }
 
 # Name normalization mapping
