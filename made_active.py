@@ -4,7 +4,7 @@ import streamlit as st
 
 # Bundle contents
 bundle_map = {
-    "High Protein Pack": {
+    "HIGH PROTEIN PACK": {
         "Chicken Fajita Bowl": 2,
         "Thai Green Chicken Curry": 2,
         "Naked Chicken Parma": 2,
@@ -12,7 +12,7 @@ bundle_map = {
         "Spaghetti Bolognese": 2,
         "Mongolian Beef": 2,
     },
-    "30 Pack": {
+    "30 PACK": {
         "Chicken Fajita Bowl": 4,
         "Mongolian Beef": 4,
         "Chicken with Vegetables": 3,
@@ -22,7 +22,7 @@ bundle_map = {
         "Spaghetti Bolognese": 4,
         "Beef Burrito Bowl": 4,
     },
-    "20 Pack": {
+    "20 PACK": {
         "Chicken Fajita Bowl": 2,
         "Mongolian Beef": 3,
         "Chicken with Vegetables": 3,
@@ -32,7 +32,7 @@ bundle_map = {
         "Spaghetti Bolognese": 2,
         "Beef Burrito Bowl": 3,
     },
-    "10 Pack": {
+    "10 PACK": {
         "Chicken Fajita Bowl": 1,
         "Mongolian Beef": 2,
         "Chicken with Vegetables": 1,
@@ -42,7 +42,7 @@ bundle_map = {
         "Spaghetti Bolognese": 1,
         "Beef Burrito Bowl": 1,
     },
-    "Made to Try": {
+    "SAMPLE PACK": {
         "Mongolian Beef": 1,
         "Thai Green Chicken Curry": 1,
         "Naked Chicken Parma": 1,
@@ -54,7 +54,7 @@ bundle_map = {
         "Beef Lasagna": 1,
         "Beef Meatballs": 1,
     },
-    "Made for Weight Loss": {
+    "WEIGHT LOSS PACK": {
         "Chicken with Vegetables": 2,
         "Naked Chicken Parma": 2,
         "Spaghetti Bolognese": 2,
@@ -62,7 +62,7 @@ bundle_map = {
         "Steak with Mushroom Sauce": 2,
         "Lamb Souvlaki": 2,
     },
-    "Made for More": {
+    "MAX PACK": {
         "Chicken Fajita Bowl": 3,
         "Mongolian Beef": 3,
         "Thai Green Chicken Curry": 3,
