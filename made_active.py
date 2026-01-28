@@ -72,6 +72,13 @@ bundle_map = {
         "Chicken Pesto Pasta": 3,
         "Beef Lasagna": 3,
     },
+    "OPTION A (7 meals)": {
+        "Naked Chicken Parma": 7,
+    },
+    "OPTION B (14 meals)": {
+         "Naked Chicken Parma": 7,
+         "Mongolian Beef": 7,
+    },
 }
 
 # Name normalization mapping
