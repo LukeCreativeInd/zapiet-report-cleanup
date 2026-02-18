@@ -73,11 +73,11 @@ bundle_map = {
         "Beef Lasagna": 3,
     },
     "OPTION A (7 meals)": {
-        "Steak with Mushroom Sauce": 7,
+        "Butter Chicken": 7,
     },
     "OPTION B (14 meals)": {
-         "Steak with Mushroom Sauce": 7,
-         "Thai Green Chicken Curry": 7,
+         "Butter Chicken": 7,
+         "Lamb Souvlaki": 7,
     },
 }
 
