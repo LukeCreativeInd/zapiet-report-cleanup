@@ -1,29 +1,40 @@
-# clean_eats.py
-
-import pandas as pd
 import io
+import pandas as pd
 import streamlit as st
+from product_mapping import PRODUCT_ORDER, clean_products
+
+
+def run_summary_flow(df, product_order, client):
+    if list(product_order) != PRODUCT_ORDER:
+        raise ValueError('The cleanup menu does not match the production report menu.')
+    try:
+        merged, excluded = clean_products(df)
+    except ValueError as error:
+        st.error(str(error))
+        return
+    if not excluded.empty:
+        unknown = excluded[excluded['Reason'] != 'Retired meal']
+        retired = excluded[excluded['Reason'] == 'Retired meal']
+        if not unknown.empty:
+            st.warning('These products are not included in the production file. Check any meal names before using the download.')
+            st.dataframe(unknown, width='stretch', hide_index=True)
+        if not retired.empty:
+            with st.expander('Retired meals excluded'):
+                st.dataframe(retired, width='stretch', hide_index=True)
+    st.subheader('Summary Table')
+    st.dataframe(merged, width='stretch', hide_index=True)
+    st.caption(f"Total meals included: {int(merged['Quantity'].sum()):,}")
+    filename = client.lower().replace(' ', '_') + '_summary'
+    st.download_button('Download Summary as CSV', merged.to_csv(index=False).encode('utf-8-sig'),
+                       file_name=filename+'.csv', mime='text/csv')
+    buffer = io.BytesIO()
+    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+        merged.to_excel(writer, index=False, sheet_name='Summary')
+    st.download_button('Download Summary as Excel', buffer.getvalue(),
+                       file_name=filename+'.xlsx',
+                       mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    return merged
+
 
 def run_clean_eats_flow(df, product_order):
-    # Only keep rows where the product is in product_order
-    grouped = df[df["Product name"].isin(product_order)].groupby("Product name", as_index=False)["Quantity"].sum()
-    
-    # Ensure all products in product_order are present in the final table (zero if not ordered)
-    full_df = pd.DataFrame({"Product name": product_order})
-    merged = pd.merge(full_df, grouped, on="Product name", how="left").fillna(0)
-    merged["Quantity"] = merged["Quantity"].astype(int)
-    
-    st.subheader("Summary Table")
-    st.dataframe(merged, use_container_width=True)
-    
-    buffer = io.BytesIO()
-    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-        merged.to_excel(writer, index=False, sheet_name='Summary')
-    buffer.seek(0)
-    
-    st.download_button(
-        label="Download Summary as Excel",
-        data=buffer,
-        file_name="product_quantity_summary.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+    return run_summary_flow(df, product_order, 'Clean Eats')
