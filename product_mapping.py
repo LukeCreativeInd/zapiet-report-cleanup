@@ -4,8 +4,8 @@ import unicodedata
 from decimal import Decimal, InvalidOperation
 import pandas as pd
 
-PRODUCT_ORDER = ['Spaghetti Bolognese', 'Beef Chow Mein', "Shepherd's Pie", 'Beef Burrito Bowl', 'Beef Meatballs', 'Lebanese Beef Stew', 'Mongolian Beef', 'Chicken with Sweet Potato and Beans', 'Naked Chicken Parma', 'Chicken Pesto Pasta', 'Chicken and Broccoli Pasta', 'Butter Chicken', 'Thai Green Chicken Curry', 'Moroccan Chicken', 'Steak with Mushroom Sauce', 'Creamy Chicken & Mushroom Gnocchi', 'Roasted Lemon Chicken & Potatoes', 'Beef Lasagna', 'Lamb Souvlaki', 'Baked Family Lasagna', 'Sunday Roast Lamb', 'Smashed Burger', 'Creamy Fettuccine']
-MEAL_WEIGHTS_G = {'Spaghetti Bolognese': 380, 'Beef Chow Mein': 360, "Shepherd's Pie": 360, 'Beef Burrito Bowl': 400, 'Beef Meatballs': 370, 'Lebanese Beef Stew': 350, 'Mongolian Beef': 360, 'Chicken with Sweet Potato and Beans': 320, 'Naked Chicken Parma': 350, 'Chicken Pesto Pasta': 330, 'Chicken and Broccoli Pasta': 350, 'Butter Chicken': 380, 'Thai Green Chicken Curry': 370, 'Moroccan Chicken': 320, 'Steak with Mushroom Sauce': 380, 'Creamy Chicken & Mushroom Gnocchi': 450, 'Roasted Lemon Chicken & Potatoes': 340, 'Beef Lasagna': 350, 'Lamb Souvlaki': 300, 'Baked Family Lasagna': 1500, 'Sunday Roast Lamb': 380, 'Smashed Burger': 380, 'Creamy Fettuccine': 400}
+PRODUCT_ORDER = ['Spaghetti Bolognese', 'Beef Chow Mein', "Shepherd's Pie", 'Beef Burrito Bowl', 'Beef Meatballs', 'Lebanese Beef Stew', 'Mongolian Beef', 'Chicken with Sweet Potato and Beans', 'Chicken Parma', 'Chicken Pesto Pasta', 'Chicken and Broccoli Pasta', 'Butter Chicken', 'Thai Green Chicken Curry', 'Moroccan Chicken', 'Steak with Mushroom Sauce', 'Creamy Chicken & Mushroom Gnocchi', 'Roasted Lemon Chicken & Potatoes', 'Beef Lasagna', 'Lamb Souvlaki', 'Baked Family Lasagna', 'Sunday Roast Lamb', 'Smashed Burger', 'Creamy Fettuccine']
+MEAL_WEIGHTS_G = {'Spaghetti Bolognese': 380, 'Beef Chow Mein': 360, "Shepherd's Pie": 360, 'Beef Burrito Bowl': 400, 'Beef Meatballs': 370, 'Lebanese Beef Stew': 350, 'Mongolian Beef': 360, 'Chicken with Sweet Potato and Beans': 320, 'Chicken Parma': 350, 'Chicken Pesto Pasta': 330, 'Chicken and Broccoli Pasta': 350, 'Butter Chicken': 380, 'Thai Green Chicken Curry': 370, 'Moroccan Chicken': 320, 'Steak with Mushroom Sauce': 380, 'Creamy Chicken & Mushroom Gnocchi': 450, 'Roasted Lemon Chicken & Potatoes': 340, 'Beef Lasagna': 350, 'Lamb Souvlaki': 300, 'Baked Family Lasagna': 1500, 'Sunday Roast Lamb': 380, 'Smashed Burger': 380, 'Creamy Fettuccine': 400}
 
 # Made Active's approved active menu from the 13 September 2026 screenshot.
 # Add meals here when they launch; Clean Eats retains its full production menu.
@@ -13,7 +13,7 @@ MADE_ACTIVE_MEALS = frozenset({
     'Mongolian Beef', 'Beef Chow Mein', 'Beef Meatballs',
     'Roasted Lemon Chicken & Potatoes', 'Chicken Pesto Pasta',
     'Steak with Mushroom Sauce', 'Beef Lasagna', 'Lamb Souvlaki',
-    'Thai Green Chicken Curry', 'Naked Chicken Parma', 'Butter Chicken',
+    'Thai Green Chicken Curry', 'Chicken Parma', 'Butter Chicken',
     'Spaghetti Bolognese', 'Beef Burrito Bowl',
 })
 ACTIVE_MEALS_BY_CLIENT = {'Clean Eats': frozenset(PRODUCT_ORDER), 'Made Active': MADE_ACTIVE_MEALS}
@@ -28,7 +28,8 @@ BUNDLE_REASON = 'Bundle/membership title excluded'
 # Aliases below come from the prior cleanup
 # tool and the supplied barcode workbook. Unknown names are never fuzzy-matched.
 ALIASES = {
-    'Chicken Parma with Seasoned Potato': 'Naked Chicken Parma',
+    'Naked Chicken Parma': 'Chicken Parma',
+    'Chicken Parma with Seasoned Potato': 'Chicken Parma',
     'Beef Meatballs with Potato Mash': 'Beef Meatballs',
     'Moroccan Chicken with Chickpeas': 'Moroccan Chicken',
     'Mongolian Beef with Basmati Rice': 'Mongolian Beef',
